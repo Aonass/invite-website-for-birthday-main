@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@600;700;800&family=Pinyon+Script&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 350 45% 92%;
+    --foreground: 350 25% 25%;
+
+    --blush: 350 55% 88%;
+    --blush-deep: 350 50% 80%;
+    --blush-soft: 350 60% 95%;
+    --rose: 350 45% 75%;
+    --cream: 30 40% 96%;
+    --ink: 350 30% 30%;
+    --gold: 36 50% 60%;
+
+    --card: 350 50% 94%;
+    --card-foreground: 350 25% 25%;
+    --popover: 350 50% 94%;
+    --popover-foreground: 350 25% 25%;
+    --primary: 350 35% 35%;
+    --primary-foreground: 350 60% 95%;
+    --secondary: 350 50% 88%;
+    --secondary-foreground: 350 30% 30%;
+    --muted: 350 35% 90%;
+    --muted-foreground: 350 15% 45%;
+    --accent: 350 60% 82%;
+    --accent-foreground: 350 30% 30%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 350 30% 82%;
+    --input: 350 30% 82%;
+    --ring: 350 45% 70%;
+    --radius: 1rem;
+
+    --sidebar-background: 350 45% 92%;
+    --sidebar-foreground: 350 25% 25%;
+    --sidebar-primary: 350 35% 35%;
+    --sidebar-primary-foreground: 350 60% 95%;
+    --sidebar-accent: 350 50% 88%;
+    --sidebar-accent-foreground: 350 30% 30%;
+    --sidebar-border: 350 30% 82%;
+    --sidebar-ring: 350 45% 70%;
+  }
+
+  .dark {
+    --background: 350 25% 15%;
+    --foreground: 350 60% 95%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+}
+
+@layer utilities {
+  .font-script { font-family: 'Pinyon Script', cursive; }
+  .font-vibes  { font-family: 'Great Vibes', cursive; }
+  .font-serif-display { font-family: 'Cormorant Garamond', serif; }
+  .font-playfair { font-family: 'Playfair Display', serif; }
+
+  .tracking-wider-2 { letter-spacing: 0.25em; }
+
+  .bg-blush { background-color: hsl(var(--blush)); }
+  .bg-blush-soft { background-color: hsl(var(--blush-soft)); }
+  .bg-blush-deep { background-color: hsl(var(--blush-deep)); }
+
+  .text-ink { color: hsl(var(--ink)); }
+
+  .arch-top {
+    border-top-left-radius: 9999px;
+    border-top-right-radius: 9999px;
+  }
+
+  .divider-line::before,
+  .divider-line::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: hsl(var(--ink) / 0.4);
+  }
+}
