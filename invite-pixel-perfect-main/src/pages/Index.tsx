@@ -129,7 +129,7 @@ const Index = () => {
             <br />
             ПРОВЕДЕНИЯ
           </h2>
-          <p className="font-vibes text-3xl text-rose/70 -mt-6 ml-20">
+          <p className="font-vibes text-3xl text-white -mt-6 ml-20">
             Location
           </p>
           <p className="mt-4 text-sm text-ink/80">ресторан</p>
@@ -166,7 +166,7 @@ const Index = () => {
 
         {/* RSVP – arched panel */}
         <motion.section {...fadeUp} className="mt-6 px-6">
-          <div className="bg-transparent border border-black arch-top rounded-b-3xl px-8 pt-12 pb-12 text-black">
+          <div className="bg-transparent border border-black arch-top rounded-b-3xl px-8 pt-24 pb-12 text-black">
             <h2 className="text-center font-serif-display text-2xl tracking-wider-2 text-black">
               АНКЕТА ГОСТЯ
             </h2>
@@ -182,7 +182,7 @@ const Index = () => {
         {/* MESSAGE */}
         <motion.section
           {...fadeUp}
-          className="px-10 pt-12 pb-8 text-center relative"
+          className="px-10 pt-12 pb-2 text-center relative"
         >
           <img
             src={bowRibbon}
@@ -199,11 +199,11 @@ const Index = () => {
             А с вас — хорошее настроение, искренние улыбки и готовность
             радоваться вместе с нами в этот важный для нашей семьи день.
           </p>
-          <p className="font-vibes text-4xl text-ink mt-8">Александр и Кара</p>
+          <p className="font-vibes text-[2.75rem] text-ink mt-16">Александр и Кира</p>
         </motion.section>
 
         {/* FAMILY */}
-        <motion.section {...fadeUp} className="px-6 pb-10 relative">
+        <motion.section {...fadeUp} className="px-6 pb-0 relative z-0">
           <img
             src={balloon}
             alt=""
@@ -216,24 +216,40 @@ const Index = () => {
             aria-hidden
             className="absolute right-2 top-10 w-12 opacity-80 animate-float-slow"
           />
-          <img src={family} alt="Александр и Кара" className="w-full" />
+          <img src={family} alt="Александр и Кира" className="w-full relative z-0" />
         </motion.section>
 
-        {/* COUNTDOWN */}
-        <motion.section {...fadeUp} className="px-6 py-10">
-          <Countdown />
-        </motion.section>
+        {/* TORN PAPER DIVIDER */}
+        <div className="relative w-full -mt-6 sm:-mt-8 -mb-[1px] z-10 leading-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1000 60"
+            preserveAspectRatio="none"
+            className="w-full h-8 sm:h-12 block"
+            fill="#ffffff"
+          >
+            <path d="M0,60 L1000,60 L1000,12 L970,25 L940,5 L910,22 L880,8 L850,28 L820,10 L790,24 L760,4 L730,18 L700,6 L670,26 L640,12 L610,20 L580,2 L550,15 L520,7 L490,22 L460,9 L430,28 L400,14 L370,25 L340,3 L310,18 L280,6 L250,24 L220,10 L190,28 L160,8 L130,22 L100,5 L70,25 L40,12 L10,20 L0,15 Z" />
+          </svg>
+        </div>
 
-        {/* FOOTER */}
-        <section className="text-center pt-4 pb-12">
-          <h3 className="font-vibes text-6xl text-ink leading-none">София</h3>
-          <p className="font-serif-display text-xl tracking-wider-2 mt-1 text-ink/90">
-            1 год
-          </p>
-          <p className="mt-3 text-[11px] tracking-wider-2 text-ink/70">
-            05 / 07 / 26
-          </p>
-        </section>
+        {/* BOTTOM WHITE SECTION */}
+        <div className="bg-white w-full">
+          {/* COUNTDOWN */}
+          <motion.section {...fadeUp} className="px-6 py-10">
+            <Countdown />
+          </motion.section>
+
+          {/* FOOTER */}
+          <section className="text-center pt-4 pb-12">
+            <h3 className="font-vibes text-6xl text-ink leading-none">София</h3>
+            <p className="font-serif-display text-xl tracking-wider-2 mt-1 text-ink/90">
+              1 год
+            </p>
+            <p className="mt-3 text-[11px] tracking-wider-2 text-ink/70">
+              05 / 07 / 26
+            </p>
+          </section>
+        </div>
       </div>
     </main>
   );
