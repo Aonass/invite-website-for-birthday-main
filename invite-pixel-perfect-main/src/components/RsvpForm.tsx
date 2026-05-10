@@ -7,11 +7,19 @@ import { motion } from "framer-motion";
 const schema = z.object({
   name: z.string().trim().min(2, "Введите имя").max(100),
   attendance: z.enum(["yes", "no"], { required_error: "Выберите вариант" }),
-  guests: z.string().trim().min(1, "Укажите состав").max(200),
+  guests: z.string().trim().max(200).optional(),
+}).superRefine((data, ctx) => {
+  if (data.attendance === "yes" && (!data.guests || data.guests.length === 0)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Укажите состав",
+      path: ["guests"]
+    });
+  }
 });
 type FormData = z.infer<typeof schema>;
 
-const WEBHOOK_URL = ""; // optional Google Apps Script webhook
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSce9nCqDG8L0HJEnSrA1TwtO_q2mpqP7wkrUR7YKOwZCSWcPA/formResponse";
 
 const RsvpForm = () => {
   const [sent, setSent] = useState(false);
@@ -25,23 +33,27 @@ const RsvpForm = () => {
   const attendance = watch("attendance");
 
   const onSubmit = async (data: FormData) => {
-    if (WEBHOOK_URL) {
-      try {
-        await fetch(WEBHOOK_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            timestamp: new Date().toISOString(),
-            name: data.name,
-            attendance: data.attendance === "yes" ? "Придёт" : "Не придёт",
-            guests: data.guests,
-          }),
-        });
-      } catch {
-        /* ignore */
-      }
+    const formData = new URLSearchParams();
+    // Имя
+    formData.append("entry.1971257236", data.name);
+    // Присутствие
+    formData.append("entry.1288137941", data.attendance === "yes" ? "Я смогу прийти" : "Я не смогу прийти");
+    // Состав
+    formData.append("entry.1065472309", data.attendance === "no" ? "-" : (data.guests || ""));
+
+    try {
+      await fetch(GOOGLE_FORM_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      });
+    } catch (e) {
+      console.error("Form submission error:", e);
     }
+    
     setSent(true);
   };
 
@@ -96,16 +108,18 @@ const RsvpForm = () => {
         {errors.attendance && <p className="text-xs text-destructive mt-1">{errors.attendance.message}</p>}
       </div>
 
-      <div>
-        <label className="block text-[11px] tracking-wider-2 uppercase mb-2">
-          В каком составе вас ожидать?
-        </label>
-        <input
-          {...register("guests")}
-          className="w-full bg-transparent border-b border-black/45 focus:border-black outline-none py-2 text-sm"
-        />
-        {errors.guests && <p className="text-xs text-destructive mt-1">{errors.guests.message}</p>}
-      </div>
+      {attendance !== "no" && (
+        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}>
+          <label className="block text-[11px] tracking-wider-2 uppercase mb-2">
+            В каком составе вас ожидать?
+          </label>
+          <input
+            {...register("guests")}
+            className="w-full bg-transparent border-b border-black/45 focus:border-black outline-none py-2 text-sm"
+          />
+          {errors.guests && <p className="text-xs text-destructive mt-1">{errors.guests.message}</p>}
+        </motion.div>
+      )}
 
       <div className="pt-4 flex justify-center">
         <button
